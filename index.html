@@ -1,0 +1,546 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Fighting Gear | TikTok Live Shopping — Especialistas en Tekken 8 &amp; FGC</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <!-- CABECERA SUPERIOR DEL TORNEO / TIENDA EN VIVO -->
+  <header class="fg-header">
+    <div class="brand-zone">
+      <div class="brand-emblem">🥊</div>
+      <div>
+        <div class="brand-tags">
+          <span class="badge-live"><span class="pulse-dot"></span> TIKTOK LIVE SHOPPING</span>
+          <span class="badge-tekken">TEKKEN 8 PRO PARTNER</span>
+        </div>
+        <h1>FIGHTING <span>GEAR</span> BOLIVIA</h1>
+        <p class="brand-subtitle">Controles Profesionales, Hitbox Leverless, Fightsticks Arcade &amp; Modding FGC</p>
+      </div>
+    </div>
+
+    <div class="header-controls">
+      <div class="stream-metrics">
+        <div class="metric-pill" title="Espectadores conectados al Live">
+          <span>👁️ Espectadores:</span>
+          <strong id="viewerCount">1,840</strong>
+        </div>
+        <div class="metric-pill" title="Likes acumulados en la transmisión">
+          <span>❤️ Combos/Likes:</span>
+          <strong id="likeCounter">4,210</strong>
+        </div>
+        <div class="metric-pill" title="Pedidos confirmados hoy">
+          <span>⚡ Ventas Live:</span>
+          <strong id="salesCounter">0</strong>
+        </div>
+      </div>
+      <button id="themeToggleBtn" class="btn-theme" type="button" title="Alternar entre Modo Torneo Oscuro y Modo Dojo Claro">
+        ☀️ Modo Claro
+      </button>
+    </div>
+  </header>
+
+  <!-- LAYOUT PRINCIPAL DE 2 COLUMNAS: ESCENARIO + CATÁLOGO (IZQ) | CHAT + CHECKOUT + BITÁCORAS (DER) -->
+  <main class="fg-workspace">
+
+    <!-- =======================================================================
+         CONTENEDOR GLOBAL DEL STREAM (#liveContainer) -> DELEGACIÓN DÍA 1
+         ======================================================================= -->
+    <section id="liveContainer" class="live-arena">
+
+      <!-- PANTALLA DE TRANSMISIÓN ESTILO TIKTOK LIVE (Soporta click y dblclick por delegación) -->
+      <div class="tiktok-live-player" data-action="like-stage">
+        <!-- Barra superior estilo TikTok Live -->
+        <div class="tt-top-bar">
+          <div class="tt-host-pill">
+            <div class="tt-avatar">🥊</div>
+            <div class="tt-host-info">
+              <strong>Fighting Gear BO</strong>
+              <span>@FightingGear_BO • 4.2K ❤️</span>
+            </div>
+            <button type="button" class="tt-follow-btn" data-action="follow">+ Seguir</button>
+          </div>
+
+          <div class="tt-top-right">
+            <span class="tt-live-tag"><span class="pulse-dot"></span> LIVE</span>
+            <span class="tt-viewers-tag">👁️ 1,840</span>
+          </div>
+        </div>
+
+        <!-- Escenario central del directo -->
+        <div class="tt-video-area" data-action="like-stage">
+          <div class="tt-center-showcase" data-action="like-stage">
+            <div class="tt-stream-circle">
+              <img id="liveShowcaseImg" src="razer_kitsune.jpg" alt="Producto en demostración">
+            </div>
+            <div class="tt-equalizer">
+              <span></span><span></span><span></span><span></span><span></span>
+            </div>
+            <h3 id="liveShowcaseTitle">Probando en vivo: Razer Kitsune</h3>
+            <p class="tt-stream-subtitle">Demostración de controles y fightsticks en Tekken 8 • Toca 2 veces la pantalla para dar ❤️</p>
+          </div>
+
+          <!-- Contenedor para corazones flotantes estilo TikTok -->
+          <div id="floatingHearts" class="floating-hearts"></div>
+        </div>
+
+        <!-- Parte inferior estilo TikTok Live: Comentarios rápidos + Audio OST + Botón Corazón -->
+        <div class="tt-bottom-bar">
+          <div class="tt-bottom-left">
+            <div id="ttLiveComments" class="tt-live-comments">
+              <div class="tt-comment-item"><strong>@jin_main:</strong> Qué brutal se ve ese hitbox 🔥</div>
+              <div class="tt-comment-item"><strong>@tekken_lapaz:</strong> ¿Tienen envío a Cochabamba?</div>
+            </div>
+            <div class="tt-music-marquee">
+              🎵 Sonando en el Live: <strong>TEKKEN 8 OST — Ortiz Farm 1st (Golden Meadow)</strong>
+            </div>
+          </div>
+
+          <!-- Audio de fondo del mapa de Perú de Tekken 8 (Ortiz Farm / Golden Meadow) -->
+          <audio id="liveAudio" src="ortiz_farm.m4a" loop preload="auto"></audio>
+
+          <!-- Botones de acción estilo TikTok (Derecha) -->
+          <div class="tt-bottom-actions">
+            <button type="button" id="audioToggleBtn" class="tt-audio-btn" data-action="toggle-audio" title="Activar o silenciar música del Live (Ortiz Farm - Tekken 8)">
+              🔊 Audio del Live
+            </button>
+            <button type="button" class="tt-action-circle like-circle" data-action="like" title="Clic o Doble Clic para enviar corazones al Live">
+              <span class="tt-heart-icon">❤️</span>
+              <small>Me gusta</small>
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- BARRA DE FILTROS DEL CATÁLOGO POR CATEGORÍA -->
+      <div class="catalog-toolbar">
+        <div class="toolbar-title">
+          <h2>🕹️ Catálogo en Directo (<span id="catalogCount">18</span> productos)</h2>
+          <p>Selecciona cualquier producto para registrarlo en la bitácora (Event Bubbling) y enviarlo al Checkout.</p>
+        </div>
+        <div class="filter-pills" role="tablist" aria-label="Categorías de productos">
+          <button type="button" class="filter-btn active" data-filter="todos">Todos (18)</button>
+          <button type="button" class="filter-btn" data-filter="gamepad">A. Gamepads (4)</button>
+          <button type="button" class="filter-btn" data-filter="hitbox">B. Hitbox / Leverless (4)</button>
+          <button type="button" class="filter-btn" data-filter="fightstick">C. Fightsticks Arcade (4)</button>
+          <button type="button" class="filter-btn" data-filter="accesorios">D. Accesorios &amp; Repuestos (6)</button>
+        </div>
+      </div>
+
+      <!-- GRILLA DE LOS 18 PRODUCTOS DE FIGHTING GEAR -->
+      <div id="productGrid" class="product-grid">
+
+        <!-- ==================== A. MANDOS TRADICIONALES (GAMEPADS) ==================== -->
+        <article class="product-card" data-category="gamepad" data-prod="DualSense Edge" data-price="1550">
+          <div class="card-badge pro">Gama Profesional</div>
+          <div class="card-img-wrap">
+            <img src="dualsense_edge.jpg" alt="Sony DualSense Edge" loading="lazy" onerror="this.src='https://placehold.co/400x280/1e293b/ef4444?text=DualSense+Edge'">
+          </div>
+          <div class="card-body">
+            <span class="card-brand">SONY • GAMEPAD</span>
+            <h3>DualSense Edge</h3>
+            <p class="card-desc">Palancas intercambiables, bloqueo de gatillos y botones traseros mapeables para Tekken 8.</p>
+            <div class="card-footer">
+              <span class="card-price">1,550 BOB</span>
+              <button type="button" class="btn-select-prod" data-prod="DualSense Edge" data-price="1550">⚡ Seleccionar</button>
+            </div>
+          </div>
+        </article>
+
+        <article class="product-card" data-category="gamepad" data-prod="Victrix Pro BFG" data-price="1490">
+          <div class="card-badge pro">Gama Profesional</div>
+          <div class="card-img-wrap">
+            <img src="victrix_pro_bfg.jpg" alt="Victrix Pro BFG" loading="lazy" onerror="this.src='https://placehold.co/400x280/1e293b/a855f7?text=Victrix+Pro+BFG'">
+          </div>
+          <div class="card-body">
+            <span class="card-brand">VICTRIX • GAMEPAD MODULAR</span>
+            <h3>Victrix Pro BFG</h3>
+            <p class="card-desc">Módulo Fightpad de 6 botones con microswitches Kailh y D-Pad intercambiable para FGC.</p>
+            <div class="card-footer">
+              <span class="card-price">1,490 BOB</span>
+              <button type="button" class="btn-select-prod" data-prod="Victrix Pro BFG" data-price="1490">⚡ Seleccionar</button>
+            </div>
+          </div>
+        </article>
+
+        <article class="product-card" data-category="gamepad" data-prod="Fighting Commander OCTA" data-price="480">
+          <div class="card-badge">Especialista FGC</div>
+          <div class="card-img-wrap">
+            <img src="hori_octa.jpg" alt="HORI Fighting Commander OCTA" loading="lazy" onerror="this.src='https://placehold.co/400x280/1e293b/38bdf8?text=HORI+OCTA'">
+          </div>
+          <div class="card-body">
+            <span class="card-brand">HORI • FIGHTPAD</span>
+            <h3>Fighting Commander OCTA</h3>
+            <p class="card-desc">Layout de 6 botones frontales, palanca con compuerta octogonal y D-Pad ajustable.</p>
+            <div class="card-footer">
+              <span class="card-price">480 BOB</span>
+              <button type="button" class="btn-select-prod" data-prod="Fighting Commander OCTA" data-price="480">⚡ Seleccionar</button>
+            </div>
+          </div>
+        </article>
+
+        <article class="product-card" data-category="gamepad" data-prod="DualSense" data-price="590">
+          <div class="card-badge">Estándar Torneo</div>
+          <div class="card-img-wrap">
+            <img src="dualsense.jpg" alt="Sony DualSense" loading="lazy" onerror="this.src='https://placehold.co/400x280/1e293b/60a5fa?text=Sony+DualSense'">
+          </div>
+          <div class="card-body">
+            <span class="card-brand">SONY • GAMEPAD</span>
+            <h3>DualSense</h3>
+            <p class="card-desc">El mando estándar oficial en torneos presenciales de PS5 y Tekken World Tour.</p>
+            <div class="card-footer">
+              <span class="card-price">590 BOB</span>
+              <button type="button" class="btn-select-prod" data-prod="DualSense" data-price="590">⚡ Seleccionar</button>
+            </div>
+          </div>
+        </article>
+
+        <!-- ==================== B. CONTROLES HITBOX / LEVERLESS ==================== -->
+        <article class="product-card" data-category="hitbox" data-prod="Razer Kitsune" data-price="2150">
+          <div class="card-badge hot">Top Leverless</div>
+          <div class="card-img-wrap">
+            <img src="razer_kitsune.jpg" alt="Razer Kitsune" loading="lazy" onerror="this.src='https://placehold.co/400x280/1e293b/22c55e?text=Razer+Kitsune'">
+          </div>
+          <div class="card-body">
+            <span class="card-brand">RAZER • LEVERLESS ÓPTICO</span>
+            <h3>Razer Kitsune</h3>
+            <p class="card-desc">Switches ópticos lineales de perfil bajo, chasis de aluminio ultra delgado e iluminación Chroma.</p>
+            <div class="card-footer">
+              <span class="card-price">2,150 BOB</span>
+              <button type="button" class="btn-select-prod" data-prod="Razer Kitsune" data-price="2150">⚡ Seleccionar</button>
+            </div>
+          </div>
+        </article>
+
+        <article class="product-card" data-category="hitbox" data-prod="Haute42 T16" data-price="690">
+          <div class="card-badge hot">Best Seller</div>
+          <div class="card-img-wrap">
+            <img src="haute42_t16.jpg" alt="Haute42 T16" loading="lazy" onerror="this.src='https://placehold.co/400x280/1e293b/f59e0b?text=Haute42+T16'">
+          </div>
+          <div class="card-body">
+            <span class="card-brand">HAUTE42 • LEVERLESS 16 BOTONES</span>
+            <h3>Haute42 T16</h3>
+            <p class="card-desc">16 botones con switches Kailh Low Profile, pantalla OLED con visualización de inputs y SOCD.</p>
+            <div class="card-footer">
+              <span class="card-price">690 BOB</span>
+              <button type="button" class="btn-select-prod" data-prod="Haute42 T16" data-price="690">⚡ Seleccionar</button>
+            </div>
+          </div>
+        </article>
+
+        <article class="product-card" data-category="hitbox" data-prod="Snack Box Micro" data-price="1650">
+          <div class="card-badge">Compacto Pro</div>
+          <div class="card-img-wrap">
+            <img src="snack_box_micro.jpg" alt="Snack Box Micro" loading="lazy" onerror="this.src='https://placehold.co/400x280/1e293b/ec4899?text=Snack+Box+Micro'">
+          </div>
+          <div class="card-body">
+            <span class="card-brand">JUNKFOOD CUSTOM ARCADES</span>
+            <h3>Snack Box Micro</h3>
+            <p class="card-desc">Formato de bolsillo ultra ligero y personalizable con respuesta instantánea para torneos.</p>
+            <div class="card-footer">
+              <span class="card-price">1,650 BOB</span>
+              <button type="button" class="btn-select-prod" data-prod="Snack Box Micro" data-price="1650">⚡ Seleccionar</button>
+            </div>
+          </div>
+        </article>
+
+        <article class="product-card" data-category="hitbox" data-prod="Victrix Pro FS-12" data-price="2750">
+          <div class="card-badge pro">Gama Élite</div>
+          <div class="card-img-wrap">
+            <img src="victrix_pro_fs12.jpg" alt="Victrix Pro FS-12" loading="lazy" onerror="this.src='https://placehold.co/400x280/1e293b/a855f7?text=Victrix+Pro+FS-12'">
+          </div>
+          <div class="card-body">
+            <span class="card-brand">VICTRIX • LEVERLESS ALUMINIO</span>
+            <h3>Victrix Pro FS-12</h3>
+            <p class="card-desc">Cuerpo de aluminio aeronáutico de una pieza, 12 botones Sanwa Denshi y acceso rápido interno.</p>
+            <div class="card-footer">
+              <span class="card-price">2,750 BOB</span>
+              <button type="button" class="btn-select-prod" data-prod="Victrix Pro FS-12" data-price="2750">⚡ Seleccionar</button>
+            </div>
+          </div>
+        </article>
+
+        <!-- ==================== C. MANDOS ARCADE TRADICIONALES (FIGHTSTICKS) ==================== -->
+        <article class="product-card" data-category="fightstick" data-prod="Obsidian 2" data-price="1980">
+          <div class="card-badge pro">Torneo Oficial</div>
+          <div class="card-img-wrap">
+            <img src="qanba_obsidian2.jpg" alt="Qanba Obsidian 2" loading="lazy" onerror="this.src='https://placehold.co/400x280/1e293b/38bdf8?text=Qanba+Obsidian+2'">
+          </div>
+          <div class="card-body">
+            <span class="card-brand">QANBA • FIGHTSTICK</span>
+            <h3>Obsidian 2</h3>
+            <p class="card-desc">Diseñado junto a leyendas del FGC, equipado con palanca y botones Sanwa Denshi originales.</p>
+            <div class="card-footer">
+              <span class="card-price">1,980 BOB</span>
+              <button type="button" class="btn-select-prod" data-prod="Obsidian 2" data-price="1980">⚡ Seleccionar</button>
+            </div>
+          </div>
+        </article>
+
+        <article class="product-card" data-category="fightstick" data-prod="Daija Arcade Stick" data-price="1790">
+          <div class="card-badge">Fácil Modding</div>
+          <div class="card-img-wrap">
+            <img src="nacon_daija.jpg" alt="Nacon Daija Arcade Stick" loading="lazy" onerror="this.src='https://placehold.co/400x280/1e293b/ef4444?text=Nacon+Daija'">
+          </div>
+          <div class="card-body">
+            <span class="card-brand">NACON • FIGHTSTICK</span>
+            <h3>Daija Arcade Stick</h3>
+            <p class="card-desc">Tapa abatible con un botón para cambiar componentes Sanwa, reposamuñecas texturizado y perfiles.</p>
+            <div class="card-footer">
+              <span class="card-price">1,790 BOB</span>
+              <button type="button" class="btn-select-prod" data-prod="Daija Arcade Stick" data-price="1790">⚡ Seleccionar</button>
+            </div>
+          </div>
+        </article>
+
+        <article class="product-card" data-category="fightstick" data-prod="Fighting Stick Alpha" data-price="1450">
+          <div class="card-badge hot">Edición Tekken 8</div>
+          <div class="card-img-wrap">
+            <img src="hori_alpha.jpg" alt="HORI Fighting Stick Alpha" loading="lazy" onerror="this.src='https://placehold.co/400x280/1e293b/f97316?text=HORI+Stick+Alpha'">
+          </div>
+          <div class="card-body">
+            <span class="card-brand">HORI • FIGHTSTICK HAYABUSA</span>
+            <h3>Fighting Stick Alpha</h3>
+            <p class="card-desc">Chasis abatible con palanca y botones Hayabusa de alta velocidad y arte intercambiable Tekken 8.</p>
+            <div class="card-footer">
+              <span class="card-price">1,450 BOB</span>
+              <button type="button" class="btn-select-prod" data-prod="Fighting Stick Alpha" data-price="1450">⚡ Seleccionar</button>
+            </div>
+          </div>
+        </article>
+
+        <article class="product-card" data-category="fightstick" data-prod="F500 Elite" data-price="890">
+          <div class="card-badge">Calidad / Precio</div>
+          <div class="card-img-wrap">
+            <img src="mayflash_f500.jpg" alt="Mayflash F500 Elite" loading="lazy" onerror="this.src='https://placehold.co/400x280/1e293b/eab308?text=Mayflash+F500+Elite'">
+          </div>
+          <div class="card-body">
+            <span class="card-brand">MAYFLASH • FIGHTSTICK</span>
+            <h3>F500 Elite</h3>
+            <p class="card-desc">Estructura robusta con base metálica y componentes Sanwa originales preinstalados de fábrica.</p>
+            <div class="card-footer">
+              <span class="card-price">890 BOB</span>
+              <button type="button" class="btn-select-prod" data-prod="F500 Elite" data-price="890">⚡ Seleccionar</button>
+            </div>
+          </div>
+        </article>
+
+        <!-- ==================== D. ACCESORIOS Y REPUESTOS ==================== -->
+        <article class="product-card" data-category="accesorios" data-prod="Palancas y Botones Sanwa" data-price="320">
+          <div class="card-badge">Japón Original</div>
+          <div class="card-img-wrap">
+            <img src="sanwa_kit.jpg" alt="Palancas y botones Sanwa" loading="lazy" onerror="this.src='https://placehold.co/400x280/1e293b/ef4444?text=Kit+Sanwa+Denshi'">
+          </div>
+          <div class="card-body">
+            <span class="card-brand">SANWA DENSHI • MODDING</span>
+            <h3>Palancas y Botones Sanwa</h3>
+            <p class="card-desc">Palanca JLF-TP-8YT + set de 8 botones OBSF-30 de respuesta suave para combos precisos.</p>
+            <div class="card-footer">
+              <span class="card-price">320 BOB</span>
+              <button type="button" class="btn-select-prod" data-prod="Palancas y Botones Sanwa" data-price="320">⚡ Seleccionar</button>
+            </div>
+          </div>
+        </article>
+
+        <article class="product-card" data-category="accesorios" data-prod="Botones Seimitsu" data-price="180">
+          <div class="card-badge">Tacto Firme</div>
+          <div class="card-img-wrap">
+            <img src="seimitsu_buttons.jpg" alt="Botones Seimitsu" loading="lazy" onerror="this.src='https://placehold.co/400x280/1e293b/06b6d4?text=Botones+Seimitsu'">
+          </div>
+          <div class="card-body">
+            <span class="card-brand">SEIMITSU • MODDING</span>
+            <h3>Botones Seimitsu</h3>
+            <p class="card-desc">Pack de 8 botones PS-14-G con mayor resistencia táctil para evitar pulsaciones accidentales.</p>
+            <div class="card-footer">
+              <span class="card-price">180 BOB</span>
+              <button type="button" class="btn-select-prod" data-prod="Botones Seimitsu" data-price="180">⚡ Seleccionar</button>
+            </div>
+          </div>
+        </article>
+
+        <article class="product-card" data-category="accesorios" data-prod="Repuestos para Controles" data-price="140">
+          <div class="card-badge">Mantenimiento</div>
+          <div class="card-img-wrap">
+            <img src="repuestos_kit.jpg" alt="Repuestos para controles" loading="lazy" onerror="this.src='https://placehold.co/400x280/1e293b/10b981?text=Kit+Repuestos+FGC'">
+          </div>
+          <div class="card-body">
+            <span class="card-brand">FIGHTING GEAR • TUNING</span>
+            <h3>Repuestos para Controles</h3>
+            <p class="card-desc">Resortes de 2lb/4lb, actuadores sobredimensionados, restrictores octogonales y microswitches Omron.</p>
+            <div class="card-footer">
+              <span class="card-price">140 BOB</span>
+              <button type="button" class="btn-select-prod" data-prod="Repuestos para Controles" data-price="140">⚡ Seleccionar</button>
+            </div>
+          </div>
+        </article>
+
+        <article class="product-card" data-category="accesorios" data-prod="Cables USB y Adaptadores" data-price="420">
+          <div class="card-badge hot">PS5 / Tekken 8</div>
+          <div class="card-img-wrap">
+            <img src="brook_wingman.jpg" alt="Cables USB y adaptadores Brook Wingman FGC" loading="lazy" onerror="this.src='https://placehold.co/400x280/1e293b/3b82f6?text=Brook+Wingman+FGC'">
+          </div>
+          <div class="card-body">
+            <span class="card-brand">BROOK / FIGHTING GEAR</span>
+            <h3>Cables USB y Adaptadores</h3>
+            <p class="card-desc">Adaptador Brook Wingman FGC sin lag para PS5 + cable USB-C mallado de 3 metros con seguro.</p>
+            <div class="card-footer">
+              <span class="card-price">420 BOB</span>
+              <button type="button" class="btn-select-prod" data-prod="Cables USB y Adaptadores" data-price="420">⚡ Seleccionar</button>
+            </div>
+          </div>
+        </article>
+
+        <article class="product-card" data-category="accesorios" data-prod="Fundas y Maletines de Transporte" data-price="350">
+          <div class="card-badge">Protección Torneo</div>
+          <div class="card-img-wrap">
+            <img src="maletin_arcade.jpg" alt="Fundas y maletines de transporte" loading="lazy" onerror="this.src='https://placehold.co/400x280/1e293b/8b5cf6?text=Maletin+Arcade'">
+          </div>
+          <div class="card-body">
+            <span class="card-brand">FIGHTING GEAR • TRAVEL</span>
+            <h3>Fundas y Maletines de Transporte</h3>
+            <p class="card-desc">Mochila acolchada impermeable con compartimento protector para palanca arcade y cables.</p>
+            <div class="card-footer">
+              <span class="card-price">350 BOB</span>
+              <button type="button" class="btn-select-prod" data-prod="Fundas y Maletines de Transporte" data-price="350">⚡ Seleccionar</button>
+            </div>
+          </div>
+        </article>
+
+        <article class="product-card" data-category="accesorios" data-prod="Paneles Personalizados para Arcade Sticks" data-price="210">
+          <div class="card-badge">Custom Art</div>
+          <div class="card-img-wrap">
+            <img src="panel_tekken8.jpg" alt="Paneles personalizados para arcade sticks" loading="lazy" onerror="this.src='https://placehold.co/400x280/1e293b/f43f5e?text=Panel+Tekken+8'">
+          </div>
+          <div class="card-body">
+            <span class="card-brand">FIGHTING GEAR • CUSTOM PLEXI</span>
+            <h3>Paneles Personalizados para Arcade Sticks</h3>
+            <p class="card-desc">Cubierta acrílica cortada a láser + arte impreso en alta definición de tu main de Tekken 8.</p>
+            <div class="card-footer">
+              <span class="card-price">210 BOB</span>
+              <button type="button" class="btn-select-prod" data-prod="Paneles Personalizados para Arcade Sticks" data-price="210">⚡ Seleccionar</button>
+            </div>
+          </div>
+        </article>
+
+      </div>
+    </section>
+
+    <!-- =======================================================================
+         COLUMNA DERECHA: MÓDULOS DE INTERACCIÓN Y BITÁCORAS (DÍA 1 Y DÍA 2)
+         ======================================================================= -->
+    <aside class="audit-sidebar">
+
+      <!-- TARJETA DÍA 1: CHAT EN DIRECTO + BITÁCORA DEL STREAM (keyup, click, dblclick) -->
+      <section class="panel-card dia1-card">
+        <div class="panel-header">
+          <span class="day-pill">DÍA 1 • DOM &amp; EVENT BUBBLING</span>
+          <h3>💬 Chat del Live &amp; Auditoría en Tiempo Real</h3>
+        </div>
+
+        <div class="chat-controls">
+          <div class="field-row">
+            <label for="chatUser">Tu Usuario TikTok (Formato <code>@usuario</code>):</label>
+            <input type="text" id="chatUser" placeholder="@usuario_live (ej. @kazuya_bo)" required>
+          </div>
+          <div class="field-row">
+            <label for="chatInput">Escribe un comentario en el Live (Evento <code>keyup</code>):</label>
+            <div class="chat-input-group">
+              <input type="text" id="chatInput" placeholder="Pregunta por precio, stock o tu mando favorito...">
+              <button type="button" id="sendChatBtn" class="btn-send-chat">Enviar</button>
+            </div>
+            <small id="typingStatus" class="typing-status" aria-live="polite"></small>
+            <small id="chatFeedback" class="form-feedback" aria-live="polite"></small>
+          </div>
+        </div>
+
+        <div class="log-header">
+          <h4>📊 Bitácora del Stream (<code>#logOutput</code>)</h4>
+          <button type="button" id="clearLog1Btn" class="btn-clear-log">Limpiar</button>
+        </div>
+        <div id="logOutput" class="log-stream" aria-live="polite">
+          <div class="log-entry system">[Transmisión iniciada] Escuchando interacciones en #liveContainer (click, dblclick, keyup)...</div>
+        </div>
+      </section>
+
+      <!-- TARJETA DÍA 2: CHECKOUT RÁPIDO + BITÁCORA DE TRANSACCIONES (change, submit + preventDefault) -->
+      <section class="panel-card dia2-card">
+        <div class="panel-header">
+          <span class="day-pill dia2">DÍA 2 • FORMULARIOS &amp; CHANGE/SUBMIT</span>
+          <h3>⚡ Checkout Rápido — TikTok Live Shopping</h3>
+        </div>
+
+        <form id="orderForm" class="checkout-form" novalidate>
+          <div class="field-row">
+            <label for="productSelect">1. Producto en Directo (Evento <code>change</code>):</label>
+            <select id="productSelect">
+              <optgroup label="A. Mandos Tradicionales (Gamepads)">
+                <option value="DualSense Edge" data-price="1550">DualSense Edge (Sony) - 1,550 BOB</option>
+                <option value="Victrix Pro BFG" data-price="1490">Victrix Pro BFG (Victrix) - 1,490 BOB</option>
+                <option value="Fighting Commander OCTA" data-price="480">Fighting Commander OCTA (HORI) - 480 BOB</option>
+                <option value="DualSense" data-price="590">DualSense (Sony) - 590 BOB</option>
+              </optgroup>
+              <optgroup label="B. Controles Hitbox / Leverless">
+                <option value="Razer Kitsune" data-price="2150">Razer Kitsune (Razer) - 2,150 BOB</option>
+                <option value="Haute42 T16" data-price="690">Haute42 T16 (Haute42) - 690 BOB</option>
+                <option value="Snack Box Micro" data-price="1650">Snack Box Micro (Junkfood Arcades) - 1,650 BOB</option>
+                <option value="Victrix Pro FS-12" data-price="2750">Victrix Pro FS-12 (Victrix) - 2,750 BOB</option>
+              </optgroup>
+              <optgroup label="C. Mandos Arcade Tradicionales (Fightsticks)">
+                <option value="Obsidian 2" data-price="1980">Obsidian 2 (Qanba) - 1,980 BOB</option>
+                <option value="Daija Arcade Stick" data-price="1790">Daija Arcade Stick (Nacon) - 1,790 BOB</option>
+                <option value="Fighting Stick Alpha" data-price="1450">Fighting Stick Alpha (HORI) - 1,450 BOB</option>
+                <option value="F500 Elite" data-price="890">F500 Elite (Mayflash) - 890 BOB</option>
+              </optgroup>
+              <optgroup label="D. Accesorios y Repuestos">
+                <option value="Palancas y Botones Sanwa" data-price="320">Palancas y Botones Sanwa - 320 BOB</option>
+                <option value="Botones Seimitsu" data-price="180">Botones Seimitsu - 180 BOB</option>
+                <option value="Repuestos para Controles" data-price="140">Repuestos para Controles - 140 BOB</option>
+                <option value="Cables USB y Adaptadores" data-price="420">Cables USB y Adaptadores - 420 BOB</option>
+                <option value="Fundas y Maletines de Transporte" data-price="350">Fundas y Maletines de Transporte - 350 BOB</option>
+                <option value="Paneles Personalizados para Arcade Sticks" data-price="210">Paneles Personalizados para Arcade Sticks - 210 BOB</option>
+              </optgroup>
+            </select>
+          </div>
+
+          <div class="field-row">
+            <label for="variantSelect">2. Seleccionar Variante / Configuración (Evento <code>change</code>):</label>
+            <select id="variantSelect">
+              <option value="Edición Estándar Oficial (1 und)" data-extra="0">Edición Estándar Oficial (1 und) — +0 BOB</option>
+              <option value="Edición Especial Tekken 8 Custom (+120 BOB)" data-extra="120">Edición Especial Tekken 8 Custom — +120 BOB</option>
+              <option value="Pack Pro Torneo: + Cable Trenzado &amp; Funda (+180 BOB)" data-extra="180">Pack Pro Torneo: + Cable Trenzado &amp; Funda — +180 BOB</option>
+              <option value="Combo Duo Team (2 unidades con descuento)" data-extra="450">Combo Duo Team (2 unidades / Kit Torneo) — +450 BOB</option>
+            </select>
+          </div>
+
+          <div class="field-row">
+            <label for="userTikTok">3. Nombre de Usuario (TikTok):</label>
+            <input type="text" id="userTikTok" placeholder="@usuario_live (ej. @heihachi_bo)" required>
+            <small id="formFeedback" class="form-feedback" aria-live="polite"></small>
+          </div>
+
+          <div class="checkout-summary">
+            <span>Total Estimado del Pedido:</span>
+            <strong id="orderTotalPrice">1,550 BOB</strong>
+          </div>
+
+          <button type="submit" class="btn-order">⚡ Confirmar Compra en Directo</button>
+        </form>
+
+        <div class="log-header">
+          <h4>📋 Bitácora de Transacciones Día 2 (<code>#logDia2</code>)</h4>
+          <button type="button" id="clearLog2Btn" class="btn-clear-log">Limpiar</button>
+        </div>
+        <div id="logDia2" class="log-box" aria-live="polite">
+          <div class="log-entry system">[Sistema] Esperando cambios de variante (change) y pedidos del Live (submit)...</div>
+        </div>
+      </section>
+
+    </aside>
+  </main>
+
+  <script src="script.js"></script>
+</body>
+</html>
+
